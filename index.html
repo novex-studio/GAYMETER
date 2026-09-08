@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,initial-scale=1.0,user-scalable=no">
+
+<meta name="theme-color" content="#090912">
+
+<title>GAYMETER™ ULTRA v4.0</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:#fff;
+    background:#080811;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:-50%;
+    z-index:-3;
+
+    background:
+        conic-gradient(
+            #ff006e,
+            #ff7b00,
+            #ffe600,
+            #00ff88,
+            #00c8ff,
+            #704cff,
+            #d900ff,
+            #ff006e
+        );
+
+    filter:blur(100px);
+    opacity:.18;
+
+    animation:rainbowMove 14s linear infinite;
+}
+
+@keyframes rainbowMove{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            transparent,
+            #080811 72%
+        );
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.particle{
+    position:fixed;
+    opacity:0;
+    animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+
+    0%{
+        transform:translateY(110vh) rotate(0deg);
+        opacity:0;
+    }
+
+    15%{opacity:.7;}
+    85%{opacity:.7;}
+
+    100%{
+        transform:translateY(-20vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+.container{
+    width:100%;
+    max-width:620px;
+    margin:auto;
+    padding:18px 16px 45px;
+}
+
+.screen{
+    display:none;
+}
+
+.screen.active{
+    display:block;
+    animation:screenIn .5s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes screenIn{
+
+    from{
+        opacity:0;
+        transform:translateY(30px) scale(.95);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.logo{
+    text-align:center;
+    padding:28px 0 24px;
+}
+
+.logoBadge{
+    width:108px;
+    height:108px;
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:32px;
+    font-size:57px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff006e,
+            #ff8a00,
+            #ffe600,
+            #00e676,
+            #00bfff,
+            #7b4dff,
+            #e100ff
+        );
+
+    background-size:400% 400%;
+
+    box-shadow:
+        0 0 35px #ff2c9c77,
+        0 0 90px #754cff44;
+
+    animation:
+        gradientMove 5s ease infinite,
+        logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes gradientMove{
+
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+@keyframes logoFloat{
+
+    0%,100%{
+        transform:translateY(0) rotate(0deg);
+    }
+
+    50%{
+        transform:translateY(-9px) rotate(2deg);
+    }
+}
+
+.logo h1{
+    margin-top:20px;
+    font-size:34px;
+    letter-spacing:4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4d9d,
+            #ffe66d,
+            #6effc1,
+            #6ecbff,
+            #c477ff
+        );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    animation:gradientText 5s linear infinite;
+}
+
+@keyframes gradientText{
+    from{background-position:0%;}
+    to{background-position:300%;}
+}
+
+.logo p{
+    margin-top:8px;
+    color:#aaaaba;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+.card{
+    background:
+        linear-gradient(
+            145deg,
+            #151522ee,
+            #0d0d16ee
+        );
+
+    border:1px solid #ffffff13;
+    border-radius:27px;
+    padding:23px;
+
+    box-shadow:
+        0 20px 70px #0008,
+        inset 0 1px #ffffff0b;
+
+    backdrop-filter:blur(18px);
+}
+
+button{
+    width:100%;
+    border:0;
+    outline:0;
+
+    padding:16px;
+    margin-top:12px;
+
+    border-radius:16px;
+    color:#fff;
+
+    background:#ffffff09;
+    border:1px solid #ffffff12;
+
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+
+    transition:
+        transform .15s,
+        box-shadow .2s,
+        background .2s;
+}
+
+button:active{
+    transform:scale(.94);
+}
+
+button:disabled{
+    cursor:default;
+}
+
+.primary{
+    background:
+        linear-gradient(
+            110deg,
+            #ff006e,
+            #9b4dff,
+            #00bfff
+        );
+
+    background-size:200%;
+
+    box-shadow:0 10px 30px #a334ff44;
+
+    animation:
+        buttonGradient 4s linear infinite;
+}
+
+@keyframes buttonGradient{
+
+    0%{background-position:0%;}
+    100%{background-position:200%;}
+}
+
+.intro{
+    color:#c4c4d0;
+    line-height:1.65;
+    text-align:center;
+    font-size:15px;
+}
+
+.startIcon{
+    text-align:center;
+    font-size:45px;
+    margin-bottom:12px;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:20px;
+}
+
+.stat{
+    padding:15px;
+    text-align:center;
+    background:#ffffff06;
+    border:1px solid #ffffff0d;
+    border-radius:17px;
+}
+
+.stat b{
+    display:block;
+    font-size:22px;
+}
+
+.stat span{
+    color:#8f8f9f;
+    font-size:11px;
+}
+
+.quizHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:13px;
+}
+
+.counter{
+    color:#aaaaba;
+    font-size:13px;
+}
+
+.online{
+    color:#57ffae;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+    background:#ffffff0b;
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:24px;
+}
+
+.progressBar{
+    height:100%;
+    width:0%;
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff006e,
+            #ff8a00,
+            #ffe600,
+            #00e676,
+            #00bfff,
+            #7b4dff
+        );
+
+    background-size:300%;
+
+    animation:
+        gradientMove 3s linear infinite;
+
+    transition:width .45s ease;
+}
+
+.questionCard{
+    animation:questionIn .35s ease;
+}
+
+@keyframes questionIn{
+
+    from{
+        opacity:0;
+        transform:translateX(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.question{
+    font-size:23px;
+    line-height:1.4;
+    margin-bottom:22px;
+}
+
+.answer{
+    text-align:left;
+    position:relative;
+    overflow:hidden;
+    margin-top:10px;
+    transition:.2s;
+}
+
+.answer:hover{
+    transform:translateY(-2px);
+    background:#ffffff10;
+}
+
+.answer.selected{
+    background:
+        linear-gradient(
+            100deg,
+            #ff006e44,
+            #7b4dff44
+        );
+
+    border-color:#ffffff44;
+    transform:scale(.97);
+}
+
+.loadingCard{
+    margin-top:100px;
+    text-align:center;
+}
+
+.loader{
+    width:85px;
+    height:85px;
+
+    margin:20px auto 30px;
+
+    border-radius:50%;
+    border:5px solid #ffffff0d;
+
+    border-top-color:#ff006e;
+    border-right-color:#ffe600;
+    border-bottom-color:#00e676;
+    border-left-color:#7b4dff;
+
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+.loadingMessage{
+    color:#aaaaba;
+    margin-top:10px;
+    min-height:20px;
+}
+
+.scan{
+    height:3px;
+    width:100%;
+    margin-top:25px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #fff,
+            transparent
+        );
+
+    animation:scan 1.2s infinite;
+}
+
+@keyframes scan{
+
+    from{transform:translateX(-100%);}
+    to{transform:translateX(100%);}
+}
+
+.resultIcon{
+    width:135px;
+    height:135px;
+
+    margin:10px auto 25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+    font-size:65px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff006e,
+            #ffe600,
+            #00e676,
+            #00bfff,
+            #7b4dff
+        );
+
+    background-size:300%;
+
+    box-shadow:0 0 50px #ff4da055;
+
+    animation:
+        resultPop .7s cubic-bezier(.2,1.5,.5,1),
+        gradientMove 4s linear infinite;
+}
+
+@keyframes resultPop{
+
+    from{
+        transform:scale(0) rotate(-180deg);
+    }
+
+    to{
+        transform:scale(1) rotate(0);
+    }
+}
+
+.resultTitle{
+    text-align:center;
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.resultText{
+    text-align:center;
+    color:#bdbdca;
+    line-height:1.6;
+}
+
+.resultScore{
+    text-align:center;
+    margin:20px 0;
+
+    font-size:48px;
+    font-weight:bold;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4d9d,
+            #ffe66d,
+            #6effc1,
+            #6ecbff,
+            #c477ff
+        );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    animation:gradientText 3s linear infinite;
+}
+
+.resultBar{
+    height:20px;
+    background:#ffffff0b;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.resultFill{
+    height:100%;
+    width:0;
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff006e,
+            #ff8a00,
+            #ffe600,
+            #00e676,
+            #00bfff,
+            #7b4dff
+        );
+
+    background-size:300%;
+
+    animation:gradientMove 3s linear infinite;
+
+    transition:
+        width 2s cubic-bezier(.2,.8,.2,1);
+}
+
+.badges{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin:22px 0;
+}
+
+.badge{
+    padding:8px 12px;
+    border-radius:30px;
+
+    background:#ffffff08;
+    border:1px solid #ffffff10;
+
+    font-size:12px;
+
+    animation:badgeIn .4s ease both;
+}
+
+@keyframes badgeIn{
+
+    from{
+        opacity:0;
+        transform:scale(.7);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.footer{
+    text-align:center;
+    margin-top:25px;
+
+    color:#666677;
+    font-size:10px;
+    line-height:1.7;
+    letter-spacing:.5px;
+}
+
+.flash{
+    position:fixed;
+    inset:0;
+    background:#fff;
+    pointer-events:none;
+    z-index:100;
+    opacity:0;
+
+    animation:flash .35s;
+}
+
+@keyframes flash{
+
+    0%{opacity:.35;}
+    100%{opacity:0;}
+}
+
+@media(max-width:400px){
+
+    .logo h1{
+        font-size:29px;
+    }
+
+    .question{
+        font-size:21px;
+    }
+
+    .card{
+        padding:19px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="particles"></div>
+
+<div class="container">
+
+<section id="home" class="screen active">
+
+    <div class="logo">
+
+        <div class="logoBadge">
+            🏳️‍🌈
+        </div>
+
+        <h1>GAYMETER™</h1>
+
+        <p>ULTRA ANALYSIS SYSTEM</p>
+
+    </div>
+
+    <div class="card">
+
+        <div class="startIcon">
+            ✦
+        </div>
+
+        <p class="intro">
+
+            El sistema está preparado para
+            analizar tus respuestas y calcular
+            el resultado del
+            <b>GAYMETER™</b>.
+
+            <br><br>
+
+            Responde con sinceridad y deja que
+            el algoritmo haga su trabajo.
+
+        </p>
+
+        <div class="stats">
+
+            <div class="stat">
+                <b>16</b>
+                <span>PREGUNTAS</span>
+            </div>
+
+            <div class="stat">
+                <b>100%</b>
+                <span>ANÁLISIS</span>
+            </div>
+
+        </div>
+
+        <button
+            class="primary"
+            onclick="startTest()">
+
+            ✨ INICIAR ANÁLISIS
+
+        </button>
+
+        <button
+            onclick="surprise()">
+
+            🎲 RESULTADO ALEATORIO
+
+        </button>
+
+    </div>
+
+    <div class="footer">
+
+        GAYMETER™ ULTRA v4.0<br>
+        PROGRAMADO Y DESARROLLADO POR<br>
+        <b>GPT STUDIO × LUCAS E.</b>
+
+        <br><br>
+
+        SISTEMA EJECUTADO SEGÚN LAS
+        INSTRUCCIONES DEL USUARIO
+
+    </div>
+
+</section>
+
+<section id="quiz" class="screen">
+
+    <div class="quizHeader">
+
+        <span class="counter" id="counter">
+            PREGUNTA 1 / 16
+        </span>
+
+        <span class="counter online">
+            ● ONLINE
+        </span>
+
+    </div>
+
+    <div class="progress">
+
+        <div
+            class="progressBar"
+            id="progressBar">
+        </div>
+
+    </div>
+
+    <div
+        class="card questionCard"
+        id="questionCard">
+
+        <h2
+            class="question"
+            id="question">
+        </h2>
+
+        <div id="answers"></div>
+
+    </div>
+
+</section>
+<section id="loading" class="screen">
+
+    <div class="card loadingCard">
+
+        <div class="loader"></div>
+
+        <h2>ANALIZANDO PERFIL</h2>
+
+        <p
+            class="loadingMessage"
+            id="loadingMessage">
+
+            Procesando respuestas...
+
+        </p>
+
+        <div class="scan"></div>
+
+    </div>
+
+</section>
+
+
+<section id="result" class="screen">
+
+    <div class="logo">
+
+        <p>ANÁLISIS COMPLETADO</p>
+
+    </div>
+
+    <div class="card">
+
+        <div
+            class="resultIcon"
+            id="resultIcon">
+
+            👑
+
+        </div>
+
+        <h2
+            class="resultTitle"
+            id="resultTitle">
+        </h2>
+
+        <p
+            class="resultText"
+            id="resultText">
+        </p>
+
+        <div
+            class="resultScore"
+            id="resultScore">
+
+            0%
+
+        </div>
+
+        <div class="resultBar">
+
+            <div
+                class="resultFill"
+                id="resultFill">
+            </div>
+
+        </div>
+
+        <div
+            class="badges"
+            id="badges">
+        </div>
+
+        <button
+            class="primary"
+            onclick="shareResult()">
+
+            📤 COMPARTIR RESULTADO
+
+        </button>
+
+        <button
+            onclick="restart()">
+
+            🔄 REPETIR TEST
+
+        </button>
+
+    </div>
+
+    <div class="footer">
+
+        GAYMETER™ ULTRA v4.0<br>
+        ANALYSIS COMPLETE<br><br>
+
+        PROGRAMADO Y DESARROLLADO POR<br>
+        <b>GPT STUDIO × LUCAS E.</b>
+
+    </div>
+
+</section>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"Cuando ves a un chico que te parece muy guapo, ¿qué piensas?",
+a:[
+    "Nada especial",
+    "Está guapo",
+    "Me llama bastante la atención",
+    "¿Por qué estoy mirando tanto?"
+]
+},
+
+{
+q:"¿Alguna vez has sentido mariposas por un chico?",
+a:[
+    "Nunca",
+    "No estoy seguro",
+    "Alguna vez",
+    "Sí, definitivamente"
+]
+},
+
+{
+q:"Un chico que te gusta te manda un mensaje. ¿Cómo reaccionas?",
+a:[
+    "Normal",
+    "Me alegra",
+    "Me pongo un poco nervioso",
+    "SONRISA AUTOMÁTICA ACTIVADA"
+]
+},
+
+{
+q:"¿Alguna vez has imaginado salir con un chico?",
+a:[
+    "Nunca",
+    "Quizá alguna vez",
+    "Sí, alguna vez",
+    "Sí, más de una vez"
+]
+},
+
+{
+q:"Un chico se te acerca y empieza a hablar contigo.",
+a:[
+    "Normal",
+    "Me pongo algo nervioso",
+    "Me interesa bastante",
+    "¿POR QUÉ ESTOY TAN NERVIOSO?"
+]
+},
+
+{
+q:"¿Te ha gustado físicamente algún chico?",
+a:[
+    "No",
+    "No estoy seguro",
+    "Alguno que otro",
+    "Sí"
+]
+},
+
+{
+q:"Si un chico que te gusta te dice que también le gustas...",
+a:[
+    "Me daría igual",
+    "Me sorprendería",
+    "Me pondría feliz",
+    "ERROR 404: CEREBRO NO DISPONIBLE"
+]
+},
+
+{
+q:"¿Alguna vez has tenido un crush con un chico?",
+a:[
+    "Nunca",
+    "No sé",
+    "Creo que sí",
+    "Sí"
+]
+},
+
+{
+q:"Cuando ves a un chico atractivo, ¿lo notas?",
+a:[
+    "No especialmente",
+    "A veces",
+    "Sí",
+    "LO NOTO INMEDIATAMENTE"
+]
+},
+
+{
+q:"¿Qué sentirías si tuvieras una cita con un chico que te gusta?",
+a:[
+    "Sería raro",
+    "No sé",
+    "Podría estar bien",
+    "Me gustaría"
+]
+},
+
+{
+q:"¿Alguna vez has pensado: «Creo que este chico me gusta»?",
+a:[
+    "Nunca",
+    "Una vez",
+    "Varias veces",
+    "Demasiadas veces"
+]
+},
+
+{
+q:"Si tuvieras que elegir, ¿te atraen los chicos?",
+a:[
+    "No",
+    "No estoy seguro",
+    "Un poco",
+    "Sí"
+]
+},
+
+{
+q:"¿Te imaginas teniendo una relación romántica con un chico?",
+a:[
+    "No",
+    "No lo sé",
+    "Tal vez",
+    "Sí"
+]
+},
+
+{
+q:"Un chico guapo pasa frente a ti. ¿Tu cerebro:",
+a:[
+    "Continúa normalmente",
+    "Lo nota",
+    "Se queda pensando un momento",
+    "SE DETUVO EL SISTEMA"
+]
+},
+
+{
+q:"¿Has sentido algo especial por algún chico?",
+a:[
+    "No",
+    "No estoy seguro",
+    "Creo que sí",
+    "Sí"
+]
+},
+
+{
+q:"ÚLTIMA PREGUNTA: ¿qué crees que va a decir el GAYMETER™?",
+a:[
+    "Que no soy gay",
+    "Que no está seguro",
+    "Que hay señales",
+    "Creo que ya sé el resultado"
+]
+}
+];
+
+let current = 0;
+let score = 0;
+
+
+function showScreen(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.remove("active");
+
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+function startTest(){
+
+    current = 0;
+    score = 0;
+
+    showScreen("quiz");
+
+    showQuestion();
+}
+
+
+function showQuestion(){
+
+    const q = questions[current];
+
+    document.getElementById("counter").textContent =
+        `PREGUNTA ${current + 1} / ${questions.length}`;
+
+    document.getElementById("progressBar").style.width =
+        `${(current / questions.length) * 100}%`;
+
+    const card =
+        document.getElementById("questionCard");
+
+    card.classList.remove("questionCard");
+
+    void card.offsetWidth;
+
+    card.classList.add("questionCard");
+
+    document.getElementById("question").textContent =
+        q.q;
+
+    const answers =
+        document.getElementById("answers");
+
+    answers.innerHTML = "";
+
+    q.a.forEach((answer,index) => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "answer";
+
+        button.textContent = answer;
+
+        button.onclick = () =>
+            selectAnswer(index,button);
+
+        answers.appendChild(button);
+
+    });
+}
+function selectAnswer(index,button){
+
+    const allButtons =
+        document.querySelectorAll(".answer");
+
+    allButtons.forEach(btn => {
+        btn.disabled = true;
+    });
+
+    button.classList.add("selected");
+
+    score += index;
+
+    setTimeout(() => {
+
+        current++;
+
+        if(current < questions.length){
+
+            showQuestion();
+
+        }else{
+
+            finishTest();
+
+        }
+
+    },500);
+}
+
+
+function finishTest(){
+
+    document.getElementById("progressBar").style.width =
+        "100%";
+
+    showScreen("loading");
+
+    const messages = [
+
+        "Procesando respuestas...",
+        "Analizando patrones...",
+        "Buscando señales...",
+        "Calculando nivel de atracción...",
+        "Consultando el algoritmo...",
+        "Midiendo intensidad...",
+        "Generando resultado..."
+
+    ];
+
+    let i = 0;
+
+    const message =
+        document.getElementById("loadingMessage");
+
+    message.textContent = messages[0];
+
+    const interval = setInterval(() => {
+
+        i++;
+
+        if(i < messages.length){
+
+            message.textContent = messages[i];
+
+        }
+
+    },450);
+
+    setTimeout(() => {
+
+        clearInterval(interval);
+
+        showResult();
+
+    },3500);
+}
+
+
+const results = [
+
+{
+    min:0,
+    max:20,
+    icon:"🤖",
+    title:"NO GAY DETECTADO",
+    text:"El sistema no encontró suficientes señales de atracción hacia chicos.",
+    badges:[
+        "BAJO NIVEL",
+        "SISTEMA ESTABLE",
+        "0 ALERTAS"
+    ]
+},
+
+{
+    min:21,
+    max:40,
+    icon:"😎",
+    title:"SEÑALES BAJAS",
+    text:"El algoritmo encontró algunas señales, pero no son suficientes para lanzar una conclusión fuerte.",
+    badges:[
+        "SEÑALES BAJAS",
+        "ANÁLISIS PARCIAL",
+        "MODO TRANQUI"
+    ]
+},
+
+{
+    min:41,
+    max:60,
+    icon:"👀",
+    title:"SISTEMA INDECISO",
+    text:"El GAYMETER™ detectó respuestas mixtas. El sistema necesita más datos para decidir.",
+    badges:[
+        "50/50",
+        "DATOS MIXTOS",
+        "ALGORITMO CONFUNDIDO"
+    ]
+},
+
+{
+    min:61,
+    max:80,
+    icon:"🌈",
+    title:"SEÑALES ALTAS",
+    text:"El análisis encontró bastantes señales de atracción hacia chicos. El sistema empieza a sospechar.",
+    badges:[
+        "SEÑALES ALTAS",
+        "NIVEL 🌈",
+        "ALERTA ACTIVADA"
+    ]
+},
+
+{
+    min:81,
+    max:95,
+    icon:"👑",
+    title:"GAY DETECTADO",
+    text:"Tus respuestas muestran un nivel muy alto de señales de atracción hacia chicos.",
+    badges:[
+        "GAY DETECTADO",
+        "NIVEL ALTO",
+        "ANÁLISIS COMPLETO"
+    ]
+},
+
+{
+    min:96,
+    max:100,
+    icon:"💅",
+    title:"GAYMETER OVERLOAD",
+    text:"El sistema recibió demasiadas señales y entró en modo OVERLOAD.",
+    badges:[
+        "OVERLOAD",
+        "🌈 MAX",
+        "SISTEMA SATURADO"
+    ]
+}
+
+];
+
+
+function showResult(){
+
+    const maxScore =
+        questions.length * 3;
+
+    let percent =
+        Math.round((score / maxScore) * 100);
+
+    percent =
+        Math.max(0,Math.min(100,percent));
+
+    const result =
+        results.find(r =>
+            percent >= r.min &&
+            percent <= r.max
+        );
+
+    document.getElementById("resultIcon").textContent =
+        result.icon;
+
+    document.getElementById("resultTitle").textContent =
+        result.title;
+
+    document.getElementById("resultText").textContent =
+        result.text;
+
+    document.getElementById("resultScore").textContent =
+        "0%";
+
+    document.getElementById("resultFill").style.width =
+        "0%";
+
+    const badges =
+        document.getElementById("badges");
+
+    badges.innerHTML = "";
+
+    result.badges.forEach((badge,index) => {
+
+        const span =
+            document.createElement("span");
+
+        span.className = "badge";
+
+        span.textContent = badge;
+
+        span.style.animationDelay =
+            `${index * 0.12}s`;
+
+        badges.appendChild(span);
+
+    });
+
+    showScreen("result");
+
+    setTimeout(() => {
+
+        animateNumber(percent);
+
+        document.getElementById("resultFill").style.width =
+            `${percent}%`;
+
+    },400);
+
+    setTimeout(() => {
+
+        flashScreen();
+        rainbowBurst();
+
+    },800);
+}
+function animateNumber(target){
+
+    const element =
+        document.getElementById("resultScore");
+
+    let number = 0;
+
+    const duration = 1400;
+    const start = performance.now();
+
+    function update(time){
+
+        const progress =
+            Math.min(
+                (time - start) / duration,
+                1
+            );
+
+        const eased =
+            1 - Math.pow(1 - progress,3);
+
+        number =
+            Math.round(target * eased);
+
+        element.textContent =
+            number + "%";
+
+        if(progress < 1){
+
+            requestAnimationFrame(update);
+
+        }
+    }
+
+    requestAnimationFrame(update);
+}
+
+
+function surprise(){
+
+    score =
+        Math.floor(
+            Math.random() *
+            (questions.length * 3 + 1)
+        );
+
+    showScreen("loading");
+
+    const message =
+        document.getElementById("loadingMessage");
+
+    message.textContent =
+        "El algoritmo está inventando tu resultado...";
+
+    setTimeout(() => {
+
+        showResult();
+
+    },1800);
+}
+
+
+function shareResult(){
+
+    const scoreText =
+        document.getElementById("resultScore").textContent;
+
+    const title =
+        document.getElementById("resultTitle").textContent;
+
+    const text =
+        `Mi resultado del GAYMETER™ ULTRA: ${title} — ${scoreText}`;
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:"GAYMETER™ ULTRA",
+            text:text
+
+        }).catch(() => {});
+
+    }else{
+
+        if(navigator.clipboard){
+
+            navigator.clipboard
+                .writeText(text)
+                .then(() => {
+
+                    alert(
+                        "Resultado copiado al portapapeles."
+                    );
+
+                })
+                .catch(() => {
+
+                    alert(text);
+
+                });
+
+        }else{
+
+            alert(text);
+
+        }
+    }
+}
+
+
+function restart(){
+
+    current = 0;
+    score = 0;
+
+    document.getElementById("resultFill").style.width =
+        "0%";
+
+    showScreen("home");
+}
+
+
+function flashScreen(){
+
+    const flash =
+        document.createElement("div");
+
+    flash.className = "flash";
+
+    document.body.appendChild(flash);
+
+    setTimeout(() => {
+
+        flash.remove();
+
+    },400);
+}
+
+
+function rainbowBurst(){
+
+    const symbols = [
+        "🌈",
+        "✨",
+        "💖",
+        "⭐",
+        "💫",
+        "🏳️‍🌈",
+        "💅"
+    ];
+
+    for(let i = 0; i < 45; i++){
+
+        const particle =
+            document.createElement("div");
+
+        particle.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() * symbols.length
+                )
+            ];
+
+        particle.style.position = "fixed";
+
+        particle.style.left = "50%";
+        particle.style.top = "45%";
+
+        particle.style.fontSize =
+            `${12 + Math.random() * 18}px`;
+
+        particle.style.pointerEvents =
+            "none";
+
+        particle.style.zIndex = "200";
+
+        const angle =
+            Math.random() * Math.PI * 2;
+
+        const distance =
+            100 + Math.random() * 280;
+
+        const x =
+            Math.cos(angle) * distance;
+
+        const y =
+            Math.sin(angle) * distance;
+
+        particle.animate(
+            [
+                {
+                    transform:
+                        "translate(-50%,-50%) scale(.3)",
+                    opacity:1
+                },
+
+                {
+                    transform:
+                        `translate(
+                            calc(-50% + ${x}px),
+                            calc(-50% + ${y}px)
+                        ) scale(1.4)`,
+
+                    opacity:0
+                }
+            ],
+            {
+                duration:
+                    900 + Math.random() * 900,
+
+                easing:
+                    "cubic-bezier(.2,.8,.2,1)"
+            }
+        );
+
+        document.body.appendChild(particle);
+
+        setTimeout(() => {
+
+            particle.remove();
+
+        },1900);
+    }
+}
+
+
+function createParticles(){
+
+    const container =
+        document.getElementById("particles");
+
+    const symbols = [
+        "🌈",
+        "✨",
+        "💖",
+        "⭐",
+        "💫",
+        "🏳️‍🌈"
+    ];
+
+    for(let i = 0; i < 35; i++){
+
+        const particle =
+            document.createElement("div");
+
+        particle.className =
+            "particle";
+
+        particle.textContent =
+            symbols[
+                Math.floor(
+                    Math.random() * symbols.length
+                )
+            ];
+
+        particle.style.left =
+            Math.random() * 100 + "%";
+
+        particle.style.fontSize =
+            10 + Math.random() * 18 + "px";
+
+        particle.style.animationDuration =
+            7 + Math.random() * 10 + "s";
+
+        particle.style.animationDelay =
+            Math.random() * 10 + "s";
+
+        container.appendChild(particle);
+    }
+}
+
+
+createParticles();
+
+</script>
+
+</body>
+</html>
