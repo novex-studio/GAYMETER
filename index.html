@@ -1666,5 +1666,89 @@ createParticles();
 
 </script>
 </div>
+<!-- CONTADOR DE PRÓXIMA ACTUALIZACIÓN -->
+<div id="updateCountdown" style="
+    text-align:center;
+    margin:25px 0 10px;
+    padding:18px;
+    border-radius:20px;
+    background:#ffffff08;
+    border:1px solid #ffffff15;
+    box-shadow:0 10px 35px #0005;
+">
+    <div style="
+        font-size:11px;
+        color:#aaaaba;
+        letter-spacing:2px;
+        margin-bottom:8px;
+    ">
+        PRÓXIMA ACTUALIZACIÓN
+    </div>
+
+    <div id="countdownTimer" style="
+        font-size:25px;
+        font-weight:bold;
+        letter-spacing:1px;
+    ">
+        CARGANDO...
+    </div>
+
+    <div style="
+        font-size:11px;
+        color:#777788;
+        margin-top:7px;
+    ">
+        11 DE SEPTIEMBRE · 10:00 AM
+    </div>
+</div>
+
+<script>
+const fechaActualizacion =
+    new Date("2026-09-11T10:00:00-03:00").getTime();
+
+function actualizarContador(){
+
+    const ahora = Date.now();
+    const diferencia = fechaActualizacion - ahora;
+
+    const contador =
+        document.getElementById("countdownTimer");
+
+    if(diferencia <= 0){
+
+        contador.textContent =
+            "ACTUALIZACIÓN DISPONIBLE";
+
+        return;
+    }
+
+    const dias =
+        Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+    const horas =
+        Math.floor(
+            (diferencia / (1000 * 60 * 60)) % 24
+        );
+
+    const minutos =
+        Math.floor(
+            (diferencia / (1000 * 60)) % 60
+        );
+
+    const segundos =
+        Math.floor(
+            (diferencia / 1000) % 60
+        );
+
+    contador.textContent =
+        `${dias}d ${String(horas).padStart(2,"0")}h ` +
+        `${String(minutos).padStart(2,"0")}m ` +
+        `${String(segundos).padStart(2,"0")}s`;
+}
+
+actualizarContador();
+
+setInterval(actualizarContador,1000);
+</script>
 </body>
 </html>
